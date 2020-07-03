@@ -60,13 +60,6 @@
     });
 
 
-    $("#cars").change(function () {
-	if (connected) {
-    		socket.emit('start_fuzzing', {data: this.value});
-	}
-    });
-
-
 
     // Sends fuzzing options to server
     $("#run_fuzzer").click(function() {
