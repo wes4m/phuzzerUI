@@ -1,0 +1,84 @@
+<div class="row">
+
+	<!-- TOP LEFT -->
+	<div class="col-lg-6">
+
+		<!-- Binary Selector -->
+		<label style="color: white">Binary: 
+		<div class="dropdown">
+		  <button class="btn btn-primary dropdown-toggle" 
+		  type="button" id="binary-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    Select binary
+		  </button>
+		  <div class="dropdown-menu" aria-labelledby="binary-name">
+		    <a class="dropdown-item" href="#">Gazebo</a>
+		    <a class="dropdown-item" href="#">PX4</a>
+		    <a class="dropdown-item" href="#">/bin/ls</a>
+		  </div>
+		</div>
+		</label>
+	</div>
+
+
+	<!-- TOP RIGHT -->
+	<div class="col-lg-6">
+
+		<div class="row">
+			<!-- AFL Cores Selector -->
+			<label style="color: white"> AFL Cores: 
+			<div class="dropdown">
+			  <button class="btn btn-primary dropdown-toggle" 
+			  type="button" id="afl-cores" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    1
+			  </button>
+			  <div class="dropdown-menu" aria-labelledby="afl-cores">
+			    <a class="dropdown-item" href="#">1</a>
+			    <a class="dropdown-item" href="#">2</a>
+			    <a class="dropdown-item" href="#">3</a>
+			    <a class="dropdown-item" href="#">4</a>
+			  </div>
+			</div>
+			</labeL>
+	
+		<label style="margin-left: 20px; color: white">Options:
+		<div style="margin-left: 20px">	
+		<!-- Simple checkbox test -->
+		<div class="form-check">
+			<label class="form-check-label" style="color=white">
+			<input id="create-dictionary" class="form-check-input" type="checkbox" value="" checked="true">
+			<span class="form-check-sign">
+			<span class="check"></span>
+			</span>
+			Enable AFL dictionary generation
+			</label>
+	       </div>
+	       <!-- Simple checkbox test -->
+	       <div class="form-check">
+			<label class="form-check-label" style="color=white">
+			<input id="first-crash" class="form-check-input" type="checkbox" value="">
+			<span class="form-check-sign">
+			<span class="check"></span>
+			</span>
+			Stop on first crash
+			</label>
+	       </div>
+	       </div>
+	       </label>
+	   </div>
+
+	</div>
+
+</div>
+</br></br>
+
+
+<div class="row">
+
+	<!-- BOTTOM -->
+	<div class="col-lg-9">
+	</div>	
+
+	<div class="col-lg-1">
+		<button id="run_fuzzer" type="button" class="btn btn-lg btn-primary">Run fuzzer</button>
+	</div>	
+</div>

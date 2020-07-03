@@ -1,0 +1,63 @@
+#!/bin/bash
+
+isDebug=false
+
+Help()
+{
+   # Help, options, for later use
+   echo "Usage: ./run [OPTIONS] <port> (Defaults to port 8888)"
+   echo
+   echo "OPTIONS:"
+   echo "-h    Print this Help."
+   echo "-d    Debug mode, runs container with interactive shell instead of WebUI."
+   echo
+}
+
+
+
+while getopts ":hd" option; do
+   case $option in
+      h|\?)
+	 Help
+         exit;;
+      d) # debug/shell mode
+         isDebug=true
+	 ;;
+   esac
+done
+
+echo "This container needs to run with the priviliged flag,
+it will configure some kernel flags in the system (sched_child_runs_first and /proc/sys/kernel/core_pattern)."
+read -p "Continue? [y/n]: " -n 1 -r
+echo  
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    exit 1
+fi
+
+port="${@: -1}"
+re='^[0-9]+$'
+if ! [[ $port =~ $re ]] ; then
+    port=8888
+fi
+
+if [[ "$isDebug" = false ]] ; then
+	echo
+	echo "Starting WebUI on http://127.0.0.1:$port"
+	echo
+fi
+
+if [[ "$isDebug" = true ]] ; then
+	docker run -u "root" --privileged -p $port:8888 \
+	-v "$(pwd)/src:/phuzzui/" \
+	-it phuzzui \
+	/bin/bash
+else
+
+	docker run -u "root" --privileged -p $port:8888 \
+	-v "$(pwd)/src:/phuzzui/" \
+	-it phuzzui \
+	/bin/bash -c "cd /phuzzui && ./start.sh"
+fi
+
+
