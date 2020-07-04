@@ -1,3 +1,51 @@
+<style>
+/* Dropdown Button */
+.dropbtn {
+  background-color: #913f9e;
+  color: white;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-size: 16px;
+  border: none; 
+  border-radius: 4px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown-box {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown-box:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
+
 <div class="row">
 
 	<!-- TOP LEFT -->
@@ -5,17 +53,16 @@
 
 		<!-- Binary Selector -->
 		<label style="color: white">Binary: 
-		<div class="dropdown">
-		  <button class="btn btn-primary dropdown-toggle" 
-		  type="button" id="binary-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    Select binary
-		  </button>
-		  <div class="dropdown-menu" aria-labelledby="binary-name">
-		    <a class="dropdown-item" href="#">Gazebo</a>
-		    <a class="dropdown-item" href="#">PX4</a>
-		    <a class="dropdown-item" href="#">/bin/ls</a>
+
+		<div class="dropdown-box">
+		  <button id="binary-name" class="dropbtn">Select binary</button>
+		  <div class="dropdown-content">
+		    <a class="dropdownitem" href="#">PX4</a>
+		    <a class="dropdownitem" href="#">Gazebo</a>
+		    <a class="dropdownitem" href="#">/bin/ls</a>
 		  </div>
-		</div>
+		</div>		
+
 		</label>
 	</div>
 
@@ -26,18 +73,15 @@
 		<div class="row">
 			<!-- AFL Cores Selector -->
 			<label style="color: white"> AFL Cores: 
-			<div class="dropdown">
-			  <button class="btn btn-primary dropdown-toggle" 
-			  type="button" id="afl-cores" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			    1
-			  </button>
-			  <div class="dropdown-menu" aria-labelledby="afl-cores">
-			    <a class="dropdown-item" href="#">1</a>
-			    <a class="dropdown-item" href="#">2</a>
-			    <a class="dropdown-item" href="#">3</a>
-			    <a class="dropdown-item" href="#">4</a>
+			<div class="dropdown-box">
+			  <button id="afl-cores" class="dropbtn">1</button>
+			  <div class="dropdown-content">
+			    <a class="dropdownitem" href="#">1</a>
+			    <a class="dropdownitem" href="#">2</a>
+			    <a class="dropdownitem" href="#">4</a>
 			  </div>
-			</div>
+			</div>		
+
 			</labeL>
 	
 		<label style="margin-left: 20px; color: white">Options:
