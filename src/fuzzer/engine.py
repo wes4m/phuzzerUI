@@ -15,15 +15,18 @@ from phuzzer import GreaseCallback
 fuzzer = None
 fuzzing = None
 
+def fuzzer_instance():
+    global fuzzer
+    return fuzzer
+
 def stop_fuzzing():
     global fuzzer, fuzzing
     if fuzzing:
         fuzzer.stop()
-        fuzzing = False
 
 # Quick stripped example
 # Based on phuzzer's __main__.py
-def start_fuzzing(fpath, fafl_cores, ffirst_crash, fno_dictionary):
+def start_fuzzing(fpath, fafl_cores, ffirst_crash, fno_dictionary, drillers):
     global fuzzer, fuzzing
 
     # "the path to the target binary to fuzz"
@@ -33,11 +36,11 @@ def start_fuzzing(fpath, fafl_cores, ffirst_crash, fno_dictionary):
     # "A module that includes some helper scripts for seed selection and such."
     helper_module = None
     # "When the fuzzer gets stuck, drill with N workers."
-    drill_extension = None
+    drill_extension = drillers
     # "A directory of inputs to grease the fuzzer with when it gets stuck."
     grease_extension = None
     # "Directory of files to seed fuzzer with"
-    seeds = None
+    seeds = [b"/phuzzui/fuzzer/seeds"]
     # "Number of AFL workers to spin up.", default=1
     afl_cores = fafl_cores
     # "The work directory for AFL.", default="/dev/shm/work/"
@@ -54,6 +57,8 @@ def start_fuzzing(fpath, fafl_cores, ffirst_crash, fno_dictionary):
     run_timeout = None
     # help="Stop on the first crash.", default=False
     first_crash = ffirst_crash
+    # Qemu mode or instrumnted (Default instrumntation mode)
+    use_qemu = False
 
     if os.path.isfile(os.path.join(os.getcwd(), logcfg)):
         logging.config.fileConfig(os.path.join(os.getcwd(), logcfg))
@@ -70,11 +75,10 @@ def start_fuzzing(fpath, fafl_cores, ffirst_crash, fno_dictionary):
     fuzzer = AFL(
         binary, work_dir=work_dir, seeds=seeds, afl_count=afl_cores,
         create_dictionary=not no_dictionary, timeout=timeout,
-        memory=memory, run_timeout=run_timeout,
+        memory=memory, run_timeout=run_timeout, use_qemu=False ,
     )
 
     print ("[*] Starting fuzzer...")
-    fuzzing = True
     fuzzer.start()
     start_time = time.time()
 

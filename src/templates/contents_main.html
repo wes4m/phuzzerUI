@@ -46,20 +46,26 @@
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 </style>
 
+
+<!-- TOP row | executions chart -->
+<div class="row">
+	<canvas id="canvas"></canvas>
+</div>
+
 <div class="row">
 
 	<!-- TOP LEFT -->
-	<div class="col-lg-6">
+	<div class="col-lg-7">
 
 		<!-- Binary Selector -->
-		<label style="color: white">Binary: 
+		<label style="color: white">Target: 
 
 		<div class="dropdown-box">
 		  <button id="binary-name" class="dropbtn">Select binary</button>
 		  <div class="dropdown-content">
 		    <a class="dropdownitem" href="#">PX4</a>
 		    <a class="dropdownitem" href="#">Gazebo</a>
-		    <a class="dropdownitem" href="#">/bin/ls</a>
+		    <a class="dropdownitem" href="#">/phuzzui/examples/example-elf</a>
 		  </div>
 		</div>		
 
@@ -68,11 +74,11 @@
 
 
 	<!-- TOP RIGHT -->
-	<div class="col-lg-6">
+	<div class="col-lg-5">
 
 		<div class="row">
 			<!-- AFL Cores Selector -->
-			<label style="color: white"> AFL Cores: 
+			<label style="color: white"> AFL Fuzzing Cores: 
 			<div class="dropdown-box">
 			  <button id="afl-cores" class="dropbtn">1</button>
 			  <div class="dropdown-content">
@@ -83,7 +89,6 @@
 			</div>		
 
 			</labeL>
-	
 		<label style="margin-left: 20px; color: white">Options:
 		<div style="margin-left: 20px">	
 		<!-- Simple checkbox test -->
@@ -108,6 +113,22 @@
 	       </div>
 	       </div>
 	       </label>
+		</div>
+		<div class="row">
+	
+			<!-- driller Cores Selector -->
+			<label style="color: white"> Symbolic tracers: 
+			<div class="dropdown-box">
+			  <button id="driller-cores" class="dropbtn">0</button>
+			  <div class="dropdown-content">
+			    <a class="dropdownitem" href="#">0</a>
+			    <a class="dropdownitem" href="#">1</a>
+			    <a class="dropdownitem" href="#">2</a>
+			    <a class="dropdownitem" href="#">4</a>
+			  </div>
+			</div>		
+
+			</labeL>
 	   </div>
 
 	</div>
