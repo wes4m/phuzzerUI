@@ -36,7 +36,7 @@ RUN pip3 install git+https://github.com/shellphish/shellphish-afl
 RUN pip3 install git+https://github.com/shellphish/driller
 RUN pip3 install git+https://github.com/angr/tracer
 RUN pip3 install git+https://github.com/angr/phuzzer
-
+#RUN pip3 install git+https://github.com/etrickel/phuzzer.git
 # Volume
 RUN mkdir /phuzzui
 
@@ -48,4 +48,4 @@ RUN ln -s /usr/local/bin/fuzzer-libs /usr/bin/fuzzer-libs
 RUN ln -s /usr/local/bin/driller /usr/bin/driller
 
 # Gazebo ?? (temporary)
-curl -sSL http://get.gazebosim.org | sh
+#curl -sSL http://get.gazebosim.org | sh

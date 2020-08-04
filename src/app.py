@@ -30,9 +30,15 @@ def output_collector():
             json_data = {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                 'value': fuzzer.summary_stats["execs_per_sec"]}
 
+            # dumb temporary fix
+            paths = open("/dev/shm/work/fuzzer-master.log","r").read().split("(")[-1].split(" total")[0]
+            print(f"Paths total dumb: {paths}")
+
             json_data_cov = {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                                'value': fuzzer.summary_stats["paths_total"]}
+                                'value': paths}
+            # non-accurate/slow stats
             print(fuzzer.summary_stats)
+
 
             socketio.emit("output", json_data)
             socketio.emit("output-coverage", json_data_cov)
