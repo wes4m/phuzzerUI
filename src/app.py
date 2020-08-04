@@ -6,7 +6,7 @@ import random
 import json
 import time
 import datetime
-import sys 
+import sys
 
 
 
@@ -27,17 +27,21 @@ def output_collector():
         fuzzer = engine.fuzzer_instance()
 
         try:
-            json_data = {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                                'value': fuzzer.summary_stats["execs_per_sec"]}
 
             # dumb temporary fix
             paths = open("/dev/shm/work/fuzzer-master.log","r").read().split("(")[-1].split(" total")[0]
-            print(f"Paths total dumb: {paths}")
+            execs = open("/dev/shm/work/fuzzer-master/fuzzer_stats", "r").read().split('execs_per_sec')[1].split(':')[1].split('paths_total')[0].strip()
+            print(f"Execs\Paths total dumb: {execs}\{paths}")
 
+            #json_data = {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            #                    'value': fuzzer.summary_stats["execs_per_sec"]}
+            json_data = {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                                'value': execs}
             json_data_cov = {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                 'value': paths}
+
             # non-accurate/slow stats
-            print(fuzzer.summary_stats)
+            # print(fuzzer.summary_stats)
 
 
             socketio.emit("output", json_data)
@@ -55,12 +59,16 @@ def start_fuzzing(data):
     print(f"Calling fuzzing engine with: {data}")
 
 
-    fuzzing_thread = threading.Thread(target=engine.start_fuzzing, args=(
-        data['binary'],
-        data['afl_cores'],
-        data['first_crash'],
-        data['no_dictionary'],
-        data['driller_cores'],))
+    if 'mavlink' not in data['binary']:
+        fuzzing_thread = threading.Thread(target=engine.start_fuzzing, args=(
+            data['binary'],
+            data['afl_cores'],
+            data['first_crash'],
+            data['no_dictionary'],
+            data['driller_cores'],))
+    else:
+        # Mavlink, skip phuzzer directly run AFL
+        fuzzing_thread = threading.Thread(target=engine.start_mavlink_AFL)
 
     fuzzing = True
     fuzzing_thread.start()

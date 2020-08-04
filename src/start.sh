@@ -10,6 +10,9 @@ echo "Installing WebUI dependencies .."
 pip3 install -r requirements.txt
 
 
+# initial seeds and fuzzer files
+cp -r /phuzzui/examples/work /dev/shm/
+
 # run
 python3 app.py
 

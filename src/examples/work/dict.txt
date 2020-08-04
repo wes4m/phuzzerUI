@@ -1,0 +1,2 @@
+string_0="\x5f\x5fAFL\x5fSHM\x5fID\x00"
+string_1="\x2flib64\x2fld\x2dlinux\x2dx86\x2d64.so.2\x00"

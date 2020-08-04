@@ -1,0 +1,21 @@
+[0;36mafl-fuzz [1;97m2.52b[0m by <lcamtuf@google.com>
+[1;92m[+] [0mLooks like we're not running on a tty, so I'll be a bit less verbose.[0m
+[1;92m[+] [0mYou have 4 CPU cores and 4 runnable tasks (utilization: 100%).[0m
+[1;94m[*] [0mChecking CPU core loadout...[0m
+[1;92m[+] [0mFound a free CPU core, binding to #0.[0m
+[1;94m[*] [0mChecking core_pattern...[0m
+[1;94m[*] [0mSetting up output directories...[0m
+[1;94m[*] [0mScanning '/dev/shm/work/initial_seeds'...[0m
+[1;92m[+] [0mNo auto-generated dictionary tokens to reuse.[0m
+[1;94m[*] [0mCreating hard links for all input files...[0m
+[1;94m[*] [0mLoading extra dictionary from '/dev/shm/work/dict.txt' (level 0)...[0m
+[1;92m[+] [0mLoaded 2 extra tokens, size range 13 B to 28 B.[0m
+[1;94m[*] [0mValidating target binary...[0m
+
+[1;91m[-] [0mThis program appears to be instrumented with afl-gcc, but is being run in
+    QEMU mode (-Q). This is probably not what you want - this setup will be
+    slow and offer no practical benefits.
+)B[?25h[0m[1;91m
+[-] PROGRAM ABORT : [1;97mInstrumentation found in -Q mode[1;91m
+         Location : [0mcheck_binary(), afl-fuzz.c:6932
+

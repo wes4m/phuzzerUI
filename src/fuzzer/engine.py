@@ -8,21 +8,33 @@ import tarfile
 import argparse
 import importlib
 import logging.config
+import subprocess
 
 from phuzzer import AFL
 from phuzzer import GreaseCallback
 
 fuzzer = None
 fuzzing = None
+process = None
 
 def fuzzer_instance():
     global fuzzer
     return fuzzer
 
 def stop_fuzzing():
-    global fuzzer, fuzzing
+    global fuzzer, fuzzing, process
     if fuzzing:
         fuzzer.stop()
+
+    if process is not None:
+        process.terminate()
+
+def start_mavlink_AFL():
+    global process
+
+    print(f"[*] Starting AFL for mavlink")
+    process = subprocess.Popen(['/phuzzui/examples/mavlink_afl.sh'])
+
 
 # Quick stripped example
 # Based on phuzzer's __main__.py
