@@ -46,3 +46,6 @@ RUN ln -s /usr/local/bin/afl-multi-cgc /usr/bin/afl-multi-cgc
 RUN ln -s /usr/local/bin/afl-unix /usr/bin/afl-unix
 RUN ln -s /usr/local/bin/fuzzer-libs /usr/bin/fuzzer-libs
 RUN ln -s /usr/local/bin/driller /usr/bin/driller
+
+# Gazebo ?? (temporary)
+curl -sSL http://get.gazebosim.org | sh

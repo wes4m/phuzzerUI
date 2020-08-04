@@ -41,12 +41,12 @@
 <style>
 .fuzzer-box {
     height: 400px;
-    width: 800px;
+    width: 1400px;
     position: fixed;
     top: 50%;
     left: 50%;
     margin-top: -400px;
-    margin-left: -400px;
+    margin-left: -700px;
 }
 </style>
 
@@ -114,6 +114,56 @@
         context = document.getElementById('canvas').getContext('2d');
         lineChart = new Chart(context, config);
 
+
+
+        config2 = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: "Coverage/second",
+                    backgroundColor: 'rgb(99, 255, 147)',
+                    borderColor: 'rgb(99, 255, 147)',
+                    data: [],
+                    fill: false,
+                }],
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: ''
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Time'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Coverage/Second'
+                        }
+                    }]
+                }
+            }
+        };
+
+        context2 = document.getElementById('canvas-coverage').getContext('2d');
+        lineChart2 = new Chart(context2, config2);
+
     });
 
     // recieves data from phuzzer
@@ -127,6 +177,19 @@
 	config.data.labels.push(data.time);
 	config.data.datasets[0].data.push(data.value);
 	lineChart.update();
+
+    });
+    // recieves data from phuzzer
+    socket.on('output-coverage', (data) => {
+	console.log(data);
+
+	if (config2.data.labels.length === 20) {
+		config2.data.labels.shift();
+		config2.data.datasets[0].data.shift();
+	}
+	config2.data.labels.push(data.time);
+	config2.data.datasets[0].data.push(data.value);
+	lineChart2.update();
 
     });
 

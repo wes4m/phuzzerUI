@@ -6,6 +6,10 @@ import random
 import json
 import time
 import datetime
+import sys 
+
+
+
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -26,7 +30,13 @@ def output_collector():
             json_data = {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                 'value': fuzzer.summary_stats["execs_per_sec"]}
 
+            json_data_cov = {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                                'value': fuzzer.summary_stats["paths_total"]}
+            print(fuzzer.summary_stats)
+
             socketio.emit("output", json_data)
+            socketio.emit("output-coverage", json_data_cov)
+
         except:
             pass
 

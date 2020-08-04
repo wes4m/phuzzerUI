@@ -49,13 +49,22 @@
 
 <!-- TOP row | executions chart -->
 <div class="row">
-	<canvas id="canvas"></canvas>
+	<div class="col-lg-6">
+		<canvas id="canvas"></canvas>
+	</div>
+	<div class="col-lg-6">
+		<canvas id="canvas-coverage"></canvas>
+	</div>
+</div>
+
+<!-- TOP row | code coverage chart -->
+<div class="row">
 </div>
 
 <div class="row">
 
 	<!-- TOP LEFT -->
-	<div class="col-lg-7">
+	<div class="col-lg-8">
 
 		<!-- Binary Selector -->
 		<label style="color: white">Target: 
@@ -64,6 +73,7 @@
 		  <button id="binary-name" class="dropbtn">Select binary</button>
 		  <div class="dropdown-content">
 		    <a class="dropdownitem" href="#">PX4</a>
+		    <a class="dropdownitem" href="#">/phuzzui/examples/mavlink</a>
 		    <a class="dropdownitem" href="#">Gazebo</a>
 		    <a class="dropdownitem" href="#">/phuzzui/examples/example-elf</a>
 		  </div>
@@ -74,7 +84,7 @@
 
 
 	<!-- TOP RIGHT -->
-	<div class="col-lg-5">
+	<div class="col-lg-4">
 
 		<div class="row">
 			<!-- AFL Cores Selector -->
