@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from fuzzer import engine
+#from fuzzer import engine
 from flask_socketio import SocketIO, send, emit
 import threading
 import random
@@ -7,7 +7,7 @@ import json
 import time
 import datetime
 import sys
-
+import os.path
 
 
 
@@ -17,20 +17,18 @@ socketio = SocketIO(app)
 from flask_socketio import send, emit
 
 fuzzing = False
-fuzzing_thread = None
 data_thread = None
+logpath = None
 
 def output_collector():
-    global socketio, fuzzing
+    global socketio, fuzzing, logpath
 
     while fuzzing:
-        fuzzer = engine.fuzzer_instance()
 
         try:
-
             # dumb temporary fix
-            paths = open("/dev/shm/work/fuzzer-master.log","r").read().split("(")[-1].split(" total")[0]
-            execs = open("/dev/shm/work/fuzzer-master/fuzzer_stats", "r").read().split('execs_per_sec')[1].split(':')[1].split('paths_total')[0].strip()
+            paths = open(f"{logpath}fuzzer-master.log","r").read().split("(")[-1].split(" total")[0]
+            execs = open(f"{logpath}fuzzer-master/fuzzer_stats", "r").read().split('execs_per_sec')[1].split(':')[1].split('paths_total')[0].strip()
             print(f"Execs\Paths total dumb: {execs}\{paths}")
 
             #json_data = {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -52,35 +50,30 @@ def output_collector():
 
         time.sleep(1)
 
-@socketio.on('start_fuzzing')
-def start_fuzzing(data):
-    global fuzzing_thread, fuzzing
 
-    print(f"Calling fuzzing engine with: {data}")
+def fuzzing_monitor():
+    global logpath, fuzzing
 
+    while True:
+        if os.path.isfile(f"{logpath}fuzzer-master.log"):
+            print(f"{logpath}fuzz-master.log found, CI started fuzzing")
+            fuzzing = True
+        else:
+            print(f"{logpath}fuzz-master.log deleted, CI finished fuzzing")
+            fuzzing = False
 
-    if 'mavlink' not in data['binary']:
-        fuzzing_thread = threading.Thread(target=engine.start_fuzzing, args=(
-            data['binary'],
-            data['afl_cores'],
-            data['first_crash'],
-            data['no_dictionary'],
-            data['driller_cores'],))
-    else:
-        # Mavlink, skip phuzzer directly run AFL
-        fuzzing_thread = threading.Thread(target=engine.start_mavlink_AFL)
+        time.sleep(2)
 
-    fuzzing = True
-    fuzzing_thread.start()
+def start_monitor_fuzzing(local_logpath):
+    global data_thread, logpath
+    logpath = local_logpath
+
+    print(f"Starting CI fuzzing monitor with logpath {logpath}")
+
+    threading.Thread(target=fuzzing_monitor).start()
 
     data_thread = threading.Thread(target=output_collector)
     data_thread.start()
-
-@socketio.on('stop_fuzzing')
-def stop_fuzzing(data):
-    global fuzzing
-    engine.stop_fuzzing()
-    fuzzing = False
 
 @app.route('/')
 def index():
@@ -89,6 +82,6 @@ def index():
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=8888)
-
+    start_monitor_fuzzing("/dev/shm/work/")
     # for running without socketio
     # app.run(debug=True, host='0.0.0.0', port=8888)
