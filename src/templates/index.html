@@ -193,38 +193,4 @@
 
     });
 
-    // Sends fuzzing options to server
-    $("#run_fuzzer").click(function() {
-    	if (connected) {
-
-		if (!fuzzing) {
-			socket.emit('start_fuzzing',
-				{
-					binary: $.trim($('#binary-name').text()),
-					afl_cores: parseInt($.trim($('#afl-cores').text())),
-					no_dictionary: !($('#create-dictionary').is(':checked')),
-					first_crash: ($('#first-crash').is(':checked')),
-					driller_cores: parseInt($.trim($('#driller-cores').text())),
-				}
-			);
-			fuzzing = true;
-			$(this).text("Stop fuzzer");
-			$(this).removeClass('btn-primary').addClass('btn-danger');
-
-		} else {
-			socket.emit('stop_fuzzing',{});
-			fuzzing = false;
-			$(this).text("Run fuzzer");
-			$(this).removeClass('btn-danger').addClass('btn-primary');
-		}
-	
-	}
-    });
-
-
-    $(function(){
-	    $(".dropdown-box .dropdownitem").click(function(){
-	     $(this).parent().parent().find("button").text($(this).text());
-	    });
-    });
 </script>
