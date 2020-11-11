@@ -58,8 +58,10 @@ def start_fuzzing(data):
 
     print(f"Calling fuzzing engine with: {data}")
 
-
-    if 'mavlink' not in data['binary']:
+    if 'CUSTOM' in data['binary']:
+        # CUSTOM binary, skip phuzzer directly run AFL
+        fuzzing_thread = threading.Thread(target=engine.start_custom_AFL, args=(data['cbpath'], data['dict'], data['argsp'],) )
+    elif 'mavlink' not in data['binary']:
         fuzzing_thread = threading.Thread(target=engine.start_fuzzing, args=(
             data['binary'],
             data['afl_cores'],

@@ -72,14 +72,30 @@
 		<div class="dropdown-box">
 		  <button id="binary-name" class="dropbtn">Select binary</button>
 		  <div class="dropdown-content">
-		    <a class="dropdownitem" href="#">PX4</a>
-		    <a class="dropdownitem" href="#">/phuzzui/examples/mavlink</a>
-		    <a class="dropdownitem" href="#">Gazebo</a>
-		    <a class="dropdownitem" href="#">/phuzzui/examples/example-elf</a>
+			  <!--<a class="dropdownitem" href="#">PX4</a> -->
+
+		    <a onclick="binshow()" class="dropdownitem" href="#">CUSTOM</a>
+		    <a onclick="binhide()" class="dropdownitem" href="#">/phuzzui/examples/mavlink</a>
+		    <a onclick="binhide()" class="dropdownitem" href="#">/phuzzui/examples/example-elf</a>
 		  </div>
 		</div>		
 
 		</label>
+	
+		</br></br>
+		<div id="customdiv" style="display: none">
+		<label style="color: white">Custom binary path: 
+			<input type="text" id="cbpath" name="cbpath">
+		</label>
+		</br>
+		<label style="color: white">Arguments: 
+			<input type="text" id="argsp" name="argsp" value="@@">
+		</label>
+		</br>
+		<label style="color: white">Dictonary path: 
+			<input type="text" id="dictpath" name="dictpath" value="@@">
+		</label>
+		</div>
 	</div>
 
 

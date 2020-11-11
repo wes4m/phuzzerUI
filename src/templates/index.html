@@ -193,6 +193,15 @@
 
     });
 
+    function binshow() {
+	  var x = document.getElementById("customdiv");
+	  x.style.display = "block";
+    }
+
+    function binhide() {
+	  var x = document.getElementById("customdiv");
+	  x.style.display = "none";
+    }
     // Sends fuzzing options to server
     $("#run_fuzzer").click(function() {
     	if (connected) {
@@ -201,6 +210,9 @@
 			socket.emit('start_fuzzing',
 				{
 					binary: $.trim($('#binary-name').text()),
+					cbpath: $.trim($('#cbpath').val()),
+					argsp: $.trim($('#argsp').val()),
+					dict: $.trim($('#dictpath').val()),
 					afl_cores: parseInt($.trim($('#afl-cores').text())),
 					no_dictionary: !($('#create-dictionary').is(':checked')),
 					first_crash: ($('#first-crash').is(':checked')),

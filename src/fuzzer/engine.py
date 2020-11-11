@@ -9,6 +9,7 @@ import argparse
 import importlib
 import logging.config
 import subprocess
+import stat
 
 from phuzzer import AFL
 from phuzzer import GreaseCallback
@@ -35,6 +36,29 @@ def start_mavlink_AFL():
     print(f"[*] Starting AFL for mavlink")
     process = subprocess.Popen(['/phuzzui/examples/mavlink_afl.sh'])
 
+
+def start_custom_AFL(cbpath, dict, argsp):
+    global process
+
+    bexec = "/phuzzui/examples/custom_afl.sh"
+
+    print(f"[*] Starting AFL for custom binary at {cbpath} with dict {dict} and args {argsp}")
+    bashcode = open("/phuzzui/examples/custom.sh", "r").read()
+    bashcode = bashcode.replace("BIN", cbpath)
+
+    # if empty args use stdin
+    argstype = f"-a {argsp}"
+    if argsp == '':
+        argstype = "--"
+
+    bashcode = bashcode.replace("ARGS", argstype)
+    bashcode = bashcode.replace("DICT", dict)
+    open(bexec, "w").write(bashcode)
+
+    st = os.stat(bexec)
+    os.chmod(bexec, st.st_mode | stat.S_IEXEC)
+
+    process = subprocess.Popen(['/phuzzui/examples/custom_afl.sh'])
 
 # Quick stripped example
 # Based on phuzzer's __main__.py
